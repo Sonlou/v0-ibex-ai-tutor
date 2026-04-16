@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              model: 'meta-llama/llama-3.2-1b-instruct:free',
+              model: 'openrouter/free',
               messages: [
                 {
                   role: 'system',
