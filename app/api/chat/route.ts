@@ -20,17 +20,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Build the content array with text and optional image
-    const content: Array<{ type: string; text?: string; source?: object }> = [];
+    // Fixed TypeScript interface
+    const content: Array<{ type: string; text?: string; image_url?: { url: string } }> = [];
 
-    // Add image if provided
+    // Fixed image payload format for OpenRouter
     if (imageBase64) {
       content.push({
-        type: 'image',
-        source: {
-          type: 'base64',
-          media_type: 'image/jpeg',
-          data: imageBase64,
+        type: 'image_url',
+        image_url: {
+          url: imageBase64,
         },
       });
     }
@@ -41,7 +39,6 @@ export async function POST(request: NextRequest) {
       text: message,
     });
 
-    // Create the streaming response
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
@@ -93,7 +90,8 @@ export async function POST(request: NextRequest) {
 
             for (const line of lines) {
               if (line.startsWith('data: ')) {
-                const data = line.slice(6);
+                // Fixed stream parsing by adding .trim() to strip \r
+                const data = line.slice(6).trim();
                 if (data === '[DONE]') continue;
 
                 try {
