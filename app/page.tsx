@@ -12,10 +12,12 @@ export default function Home() {
   const explanationRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = async (message: string, imageBase64: string | null) => {
+    console.log('[v0] Starting search with message:', message);
     setIsLoading(true);
     setExplanation('');
 
     try {
+      console.log('[v0] Sending request to /api/chat');
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
@@ -26,10 +28,18 @@ export default function Home() {
           imageBase64,
         }),
       });
+      console.log('[v0] Response received, status:', response.status);
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to get response');
+        let errorMessage = 'Failed to get response';
+        try {
+          const error = await response.json();
+          errorMessage = error.error || errorMessage;
+        } catch {
+          const text = await response.text();
+          errorMessage = text || errorMessage;
+        }
+        throw new Error(errorMessage);
       }
 
       const reader = response.body?.getReader();
@@ -37,14 +47,19 @@ export default function Home() {
         throw new Error('No response body');
       }
 
+      console.log('[v0] Starting to read stream');
       const decoder = new TextDecoder();
       let fullResponse = '';
 
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          console.log('[v0] Stream complete');
+          break;
+        }
 
         const chunk = decoder.decode(value, { stream: true });
+        console.log('[v0] Chunk received:', chunk.substring(0, 50));
         fullResponse += chunk;
         setExplanation(fullResponse);
 

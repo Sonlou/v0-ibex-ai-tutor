@@ -72,7 +72,8 @@ export async function POST(request: NextRequest) {
 
           if (!response.ok) {
             const errorData = await response.text();
-            throw new Error(`OpenRouter API error: ${response.status} - ${errorData}`);
+            console.error('[v0] OpenRouter API error:', response.status, errorData);
+            throw new Error(`OpenRouter API error: ${response.status}`);
           }
 
           const reader = response.body?.getReader();
