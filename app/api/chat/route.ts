@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              model: 'google/gemma-3-12b-it:free',
+              model: 'openrouter/free',
               messages: [
                 {
                   role: 'system',
@@ -69,7 +69,8 @@ export async function POST(request: NextRequest) {
 
           if (!response.ok) {
             const errorData = await response.text();
-            throw new Error(`OpenRouter API error: ${response.status} - ${errorData}`);
+            console.error('[v0] OpenRouter API error:', response.status, errorData);
+            throw new Error(`OpenRouter API error: ${response.status}`);
           }
 
           const reader = response.body?.getReader();
