@@ -1,35 +1,162 @@
-# v0-ibex-ai-tutor
+# IbexAI
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+AI-powered technical tutor for students and learners who need clearer explanations of complex English technical manuals, diagrams, and equipment instructions.
 
-## Built with v0
+IbexAI helps users ask questions in natural language and upload images for visual context, then receives simplified explanations tailored for technical education in fields such as IT, automotive, and construction.
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+## Why this project exists
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_pd0SfeWydnYEEErIq6OkKV9ms8fI)
+Many technical manuals are written in dense English and are difficult for students to understand without expert guidance. This project bridges that gap by combining:
 
-## Getting Started
+- A modern web interface for asking questions
+- Image-based context support for diagrams and equipment photos
+- AI-powered explanations from OpenRouter models
+- A streamlined experience for students to learn technical concepts faster
 
-First, run the development server:
+## Features
+
+- Ask technical questions in plain English
+- Upload JPG/PNG images for better context
+- Receive streamed AI explanations in real time
+- Built for educational and technical-learning workflows
+- Responsive Next.js interface for desktop and mobile
+- Tailwind-based UI with a clean, student-focused layout
+
+## Tech stack
+
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui-inspired component structure
+- OpenRouter API for LLM access
+
+## Project structure
+
+```text
+.
+├── app/
+│   ├── api/
+│   │   └── chat/
+│   │       └── route.ts        # OpenRouter chat endpoint
+│   ├── globals.css             # Global styles
+│   ├── layout.tsx              # Root app layout
+│   └── page.tsx                # Main UI entry point
+├── components/
+│   ├── header.tsx              # Top navigation
+│   ├── search-box.tsx          # Chat input and image upload UI
+│   ├── explanation-box.tsx     # Response display area
+│   └── ui/                     # Reusable UI primitives
+├── lib/
+│   └── utils.ts                # Helper utilities
+├── public/                     # Static assets
+├── styles/                     # Additional styling
+├── .gitignore
+├── CONTRIBUTING.md
+├── components.json
+├── next.config.mjs
+├── next-env.d.ts
+├── package.json
+├── postcss.config.mjs
+├── tsconfig.json
+├── README.md
+└── pnpm-lock.yaml
+```
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 18+
+- npm, pnpm, or yarn
+- An OpenRouter API key
+
+### 1. Install dependencies
+
+```bash
+npm install
+# or
+pnpm install
+# or
+yarn install
+```
+
+### 2. Configure environment variables
+
+Create a `.env.local` file in the project root and add your OpenRouter key:
+
+```bash
+OPENROUTER_API_KEY=your_openrouter_api_key_here
+```
+
+You can also copy the example file if available.
+
+### 3. Run the app locally
 
 ```bash
 npm run dev
 # or
-yarn dev
-# or
 pnpm dev
+# or
+yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How it works
 
-## Learn More
+The app uses a Next.js route at `/api/chat` to send user prompts to OpenRouter. If an image is uploaded, it is included with the user message so the model can analyze the visual context and generate a better explanation.
 
-To learn more, take a look at the following resources:
+The frontend streams the model output back to the user in real time, creating a conversational learning experience similar to an AI tutor.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
+## API route
 
-<a href="https://v0.app/chat/api/kiro/clone/Sonlou/v0-ibex-ai-tutor" alt="Open in Kiro"><img src="https://pdgvvgmkdvyeydso.public.blob.vercel-storage.com/open%20in%20kiro.svg?sanitize=true" /></a>
+The main backend endpoint is:
+
+- `POST /api/chat`
+
+Request body:
+
+```json
+{
+  "message": "Explain this motor starter diagram",
+  "imageBase64": "data:image/png;base64,..."
+}
+```
+
+If `imageBase64` is omitted, the model responds based on text only.
+
+## Scripts
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
+
+## Contributing
+
+We welcome improvements, fixes, and feature ideas.
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines before submitting a PR.
+
+## License
+
+This project does not currently declare a license in the repository metadata. Please check the repository settings or add a license if you intend to distribute it publicly.
+
+## Notes
+
+This project was generated as a learning-focused AI tutor and is designed to be extended with:
+
+- multilingual support
+- subject-specific tutoring modes
+- saved learning sessions
+- PDF/manual parsing
+- more specialized evaluation workflows
+
+If you want to build the project further, the best next steps are to add stronger prompt engineering, safer error handling, and a production-ready authentication or session system.
+
+---
+
+Built for technical education and AI-assisted learning.
