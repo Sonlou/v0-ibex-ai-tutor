@@ -2,7 +2,7 @@
 
 AI-powered technical tutor for students and learners who need clearer explanations of complex English technical manuals, diagrams, and equipment instructions.
 
-IbexAI helps users ask questions in natural language and upload images for visual context, then receives simplified explanations tailored for technical education in fields such as IT, automotive, and construction.
+IbexAI helps users ask questions in natural language and upload images for visual context, then receive simplified explanations tailored for technical education in fields such as IT, automotive, and construction.
 
 ## Why this project exists
 
@@ -10,7 +10,7 @@ Many technical manuals are written in dense English and are difficult for studen
 
 - A modern web interface for asking questions
 - Image-based context support for diagrams and equipment photos
-- AI-powered explanations from OpenRouter models
+- AI-powered explanations from an external language model
 - A streamlined experience for students to learn technical concepts faster
 
 ## Features
@@ -29,7 +29,7 @@ Many technical manuals are written in dense English and are difficult for studen
 - TypeScript
 - Tailwind CSS
 - shadcn/ui-inspired component structure
-- OpenRouter API for LLM access
+- AI model integration via a managed API service
 
 ## Project structure
 
@@ -38,7 +38,7 @@ Many technical manuals are written in dense English and are difficult for studen
 ├── app/
 │   ├── api/
 │   │   └── chat/
-│   │       └── route.ts        # OpenRouter chat endpoint
+│   │       └── route.ts        # AI chat endpoint
 │   ├── globals.css             # Global styles
 │   ├── layout.tsx              # Root app layout
 │   └── page.tsx                # Main UI entry point
@@ -69,7 +69,7 @@ Many technical manuals are written in dense English and are difficult for studen
 
 - Node.js 18+
 - npm, pnpm, or yarn
-- An OpenRouter API key
+- An AI service API key configured in your environment
 
 ### 1. Install dependencies
 
@@ -83,13 +83,11 @@ yarn install
 
 ### 2. Configure environment variables
 
-Create a `.env.local` file in the project root and add your OpenRouter key:
+Create a `.env.local` file in the project root and add your API key:
 
 ```bash
-OPENROUTER_API_KEY=your_openrouter_api_key_here
+AI_API_KEY=your_api_key_here
 ```
-
-You can also copy the example file if available.
 
 ### 3. Run the app locally
 
@@ -105,7 +103,7 @@ Then open http://localhost:3000 in your browser.
 
 ## How it works
 
-The app uses a Next.js route at `/api/chat` to send user prompts to OpenRouter. If an image is uploaded, it is included with the user message so the model can analyze the visual context and generate a better explanation.
+The app uses a Next.js route at `/api/chat` to send user prompts to an AI service. If an image is uploaded, it is included with the user message so the model can analyze the visual context and generate a better explanation.
 
 The frontend streams the model output back to the user in real time, creating a conversational learning experience similar to an AI tutor.
 
